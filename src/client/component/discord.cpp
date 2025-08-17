@@ -50,7 +50,7 @@ namespace discord
 			handlers.spectateGame = nullptr;
 			handlers.joinRequest = nullptr;
 
-			Discord_Initialize("1406382061845090415", &handlers, 1, nullptr);
+			Discord_Initialize("1406382061845090415", &handlers, 1, nullptr); // aqui puedes pegar tu bot de como quieres que se vea el logo del juego
 
 			this->initialized_ = true;
 
