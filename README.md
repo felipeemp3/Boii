@@ -106,13 +106,7 @@ El ejecutable se generará en:
 
 ## 🖼️ Vista previa
 
-```{=html}
-<p align="center">
-```
-`<img src="https://i.imgur.com/Z9hF4nb.png" width="600px" alt="Discord RPC Preview"/>`{=html}
-```{=html}
-</p>
-```
+![alt text](image.png)
 
 ------------------------------------------------------------------------
 
