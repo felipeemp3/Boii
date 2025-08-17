@@ -11,9 +11,6 @@ namespace discord
 {
 	namespace
 	{
-		// función para obtener el nombre de usuario del juego
-		std::string get_game_username();
-
 		void ready(const DiscordUser* request)
 		{
 			SetEnvironmentVariableA("discord_user", request->userId);
@@ -28,13 +25,8 @@ namespace discord
 			discord_presence.partyMax = 0;
 			discord_presence.startTimestamp = time(0);
 			discord_presence.largeImageKey = "logo";
-			discord_presence.smallImageKey = "sexy";
-			discord_presence.details = "Call of Duty: Black Ops 3";
-
-			// Obtener el nombre de usuario del juego y mostrarlo en el Rich Presence
-			static std::string game_username = get_game_username();
-			discord_presence.state = game_username.c_str();
-
+			discord_presence.smallImageKey = "sexy"
+				;
 			Discord_UpdatePresence(&discord_presence);
 		}
 

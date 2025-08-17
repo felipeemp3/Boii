@@ -139,45 +139,6 @@ namespace steam_proxy
 
 		ownership_state start_mod_unsafe(const std::string& title, size_t app_id)
 		{
-			if (!client_utils || !client_user)
-			{
-				return ownership_state::nosteam;
-			}
-
-			if (!client_user.invoke<bool>("BIsSubscribedApp", app_id))
-			{
-#ifdef DEV_BUILD
-				app_id = 480; // Spacewar
-#else
-				return ownership_state::unowned;
-#endif
-			}
-
-			if (is_disabled())
-			{
-				return ownership_state::success;
-			}
-
-			client_utils.invoke<void>("SetAppIDForCurrentPipe", app_id, false);
-
-			char our_directory[MAX_PATH] = {0};
-			GetCurrentDirectoryA(sizeof(our_directory), our_directory);
-
-			const auto self = utils::nt::library::get_by_address(start_mod_unsafe);
-			const auto path = self.get_path();
-			const auto* cmdline = utils::string::va("\"%s\" -proc %d", path.generic_string().data(),
-			                                        GetCurrentProcessId());
-
-			steam::game_id game_id;
-			game_id.raw.type = 1; // k_EGameIDTypeGameMod
-			game_id.raw.app_id = app_id & 0xFFFFFF;
-
-			const auto* mod_id = "bo3";
-			game_id.raw.mod_id = *reinterpret_cast<const unsigned int*>(mod_id) | 0x80000000;
-
-			client_user.invoke<bool>("SpawnProcess", path.generic_string().data(), cmdline, our_directory,
-			                         &game_id.bits, title.data(), 0, 0, 0);
-
 			return ownership_state::success;
 		}
 
@@ -196,21 +157,7 @@ namespace steam_proxy
 
 		void evaluate_ownership_state(const ownership_state state)
 		{
-#if defined(DEV_BUILD) || defined(NO_CHECK)
 			(void)state;
-#else
-			switch (state)
-			{
-			case ownership_state::nosteam:
-				//throw std::runtime_error("Steam must be running to play this game!");
-			case ownership_state::unowned:
-				//throw std::runtime_error("You must own the game on steam to play this mod!");
-			case ownership_state::error:
-				//throw std::runtime_error("Failed to verify ownership of the game!");
-			case ownership_state::success:
-				break;
-			}
-#endif
 		}
 	}
 
