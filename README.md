@@ -104,12 +104,6 @@ El ejecutable se generará en:
 
 ------------------------------------------------------------------------
 
-## 🖼️ Vista previa
-
-![alt text](image.png)
-
-------------------------------------------------------------------------
-
 ## 🤝 Contribución
 
 Si quieres mejorar este launcher:\
