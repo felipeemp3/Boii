@@ -10,7 +10,8 @@ namespace branding
 	{
         void draw_branding()
         {
-        // Versión minimalista que no genera advertencias
+        // Versión minimalista para quitar la marca de agua de la versión
+		// Esta función se llama en el bucle de renderizado del juego
         [[maybe_unused]] float color[4] = { 0.666f, 0.666f, 0.666f, 0.666f };
         [[maybe_unused]] float scale = 1.0f; // Añadido para evitar la advertencia C4189
 
