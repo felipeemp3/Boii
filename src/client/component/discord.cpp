@@ -3,6 +3,7 @@
 
 #include <discord_rpc.h>
 #include <ctime>
+#include <string> // Agrega esta línea si no está
 
 #include "scheduler.hpp"
 
@@ -10,6 +11,9 @@ namespace discord
 {
 	namespace
 	{
+		// función para obtener el nombre de usuario del juego
+		std::string get_game_username();
+
 		void ready(const DiscordUser* request)
 		{
 			SetEnvironmentVariableA("discord_user", request->userId);
@@ -20,13 +24,16 @@ namespace discord
 			ZeroMemory(&discord_presence, sizeof(discord_presence));
 
 			discord_presence.instance = 1;
-
 			discord_presence.partySize = 0;
 			discord_presence.partyMax = 0;
 			discord_presence.startTimestamp = time(0);
 			discord_presence.largeImageKey = "logo";
 			discord_presence.smallImageKey = "sexy";
-			discord_presence.details = "Playing BO3 via Ezz!";
+			discord_presence.details = "Call of Duty: Black Ops 3";
+
+			// Obtener el nombre de usuario del juego y mostrarlo en el Rich Presence
+			static std::string game_username = get_game_username();
+			discord_presence.state = game_username.c_str();
 
 			Discord_UpdatePresence(&discord_presence);
 		}
@@ -51,7 +58,7 @@ namespace discord
 			handlers.spectateGame = nullptr;
 			handlers.joinRequest = nullptr;
 
-			Discord_Initialize("967371125573177474", &handlers, 1, nullptr);
+			Discord_Initialize("1406382061845090415", &handlers, 1, nullptr);
 
 			this->initialized_ = true;
 
